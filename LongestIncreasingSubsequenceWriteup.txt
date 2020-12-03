@@ -1,0 +1,5 @@
+This code does two things
+
+1) It creates a file called "random.txt" which is then filled with 100 random integers separated by commas.
+
+2) Iterates through the array and finds the largest increasing subsequence of numbers, which it then prints to the console.
