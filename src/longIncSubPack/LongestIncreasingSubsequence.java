@@ -9,7 +9,7 @@ public class LongestIncreasingSubsequence {
 		// TODO Auto-generated method stub
 		Random rand = new Random(); 
 		
-		/*
+		
 		BufferedWriter bw = new BufferedWriter(new FileWriter("random.txt"));
 		
 		for(int i = 0; i < 100; i++) {
@@ -20,7 +20,7 @@ public class LongestIncreasingSubsequence {
 		}
 		
 		bw.close();
-		*/
+		
 		
 		BufferedReader br = new BufferedReader(new FileReader("random.txt"));
 		
@@ -31,30 +31,41 @@ public class LongestIncreasingSubsequence {
 		int tempSequence = 0;
 		int placeHolder = Integer.parseInt(arr[0]);
 		
-		for(int i = 0; i < arr.length; i++) {
+		int startOfSubsequence = -1;
+		int endOfSubsequence = -1;
+		
+		int tempStartSeq = -1;
+		
+		for(int i = 0; i < arr.length - 1; i++) {
 			if(i == 0) {
 				tempSequence = 1;
+				tempStartSeq = 0;
 			}
 			else {
 				int temp = Integer.parseInt(arr[i]);
 				if(temp > placeHolder) {
 					tempSequence++;
 					placeHolder = Integer.parseInt(arr[i]);
+					if(tempSequence == 1) {
+						tempStartSeq = i;
+					}
 				}
-				else {
+				else if(temp <= placeHolder){
 					placeHolder = Integer.parseInt(arr[i]);
 					if(tempSequence > greatestSequence) {
 						greatestSequence = tempSequence;
-						tempSequence = 0;
+						startOfSubsequence = tempStartSeq;
+						endOfSubsequence = i;
 					}
+					tempSequence = 0;
 				}
 			}
 		}
 		
-		if(tempSequence > greatestSequence)
+		if(tempSequence > greatestSequence) {
 			greatestSequence = tempSequence;
-		
-		System.out.println("The greatest Increasing subsequence is: " + greatestSequence);
+		}
+		System.out.println("The greatest Increasing subsequence is: " + greatestSequence + " from " + startOfSubsequence + " to " + endOfSubsequence);
 
 	}
 
