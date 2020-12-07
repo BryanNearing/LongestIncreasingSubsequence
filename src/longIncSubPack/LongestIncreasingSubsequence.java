@@ -4,69 +4,49 @@ import java.io.*;
 import java.util.*;
 
 public class LongestIncreasingSubsequence {
+	
+	static int max_ref;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Random rand = new Random(); 
 		
+		Scanner s = new Scanner(System.in);
 		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("random.txt"));
+		System.out.println("How many numbers do you want to look through?");
+		int n = s.nextInt();
 		
-		for(int i = 0; i < 100; i++) {
-			if(i < 99)
-				bw.write(rand.nextInt(1000) + ",");
-			if(i == 99)
-				bw.write(rand.nextInt(1000));
+		System.out.println("Looking through " + n + " numbers");
+		
+		int[] arr = new int[n];
+		int[] lis = new int[n];
+		
+		for(int i = 0; i < n; i++) {
+			arr[i] = rand.nextInt(100);
+			lis[i] = 1;
 		}
 		
-		bw.close();
-		
-		
-		BufferedReader br = new BufferedReader(new FileReader("random.txt"));
-		
-		String line = br.readLine();
-		String[] arr = line.split(",");
-		
-		int greatestSequence = 0;
-		int tempSequence = 0;
-		int placeHolder = Integer.parseInt(arr[0]);
-		
-		int startOfSubsequence = -1;
-		int endOfSubsequence = -1;
-		
-		int tempStartSeq = -1;
-		
-		for(int i = 0; i < arr.length - 1; i++) {
-			if(i == 0) {
-				tempSequence = 1;
-				tempStartSeq = 0;
-			}
-			else {
-				int temp = Integer.parseInt(arr[i]);
-				if(temp > placeHolder) {
-					tempSequence++;
-					placeHolder = Integer.parseInt(arr[i]);
-					if(tempSequence == 1) {
-						tempStartSeq = i;
-					}
-				}
-				else if(temp <= placeHolder){
-					placeHolder = Integer.parseInt(arr[i]);
-					if(tempSequence > greatestSequence) {
-						greatestSequence = tempSequence;
-						startOfSubsequence = tempStartSeq;
-						endOfSubsequence = i;
-					}
-					tempSequence = 0;
+		for(int i = 1; i < arr.length; i++) {
+			for(int j = 0; j < i; j++) {
+				if(arr[j] < arr[i] && lis[i] < lis[j] + 1) {
+					lis[i] = lis[j] + 1;
 				}
 			}
 		}
 		
-		if(tempSequence > greatestSequence) {
-			greatestSequence = tempSequence;
+		int seq = 0;
+		
+		for(int i = 0; i < arr.length; i++) {
+			if(lis[i] > seq)
+				seq = lis[i];
 		}
-		System.out.println("The greatest Increasing subsequence is: " + greatestSequence + " from " + startOfSubsequence + " to " + endOfSubsequence);
-
+		
+		
+		
+		System.out.println("The longest increasing subsequence is " + seq);
+		
 	}
 
+	
 }
+
