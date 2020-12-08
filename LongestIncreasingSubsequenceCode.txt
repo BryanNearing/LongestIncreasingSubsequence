@@ -7,58 +7,50 @@ import java.io.*;
 import java.util.*;
 
 public class LongestIncreasingSubsequence {
+	
+	static int max_ref;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Random rand = new Random(); 
 		
+		Scanner s = new Scanner(System.in);
 		
-		BufferedWriter bw = new BufferedWriter(new FileWriter("random.txt"));
+		System.out.println("How many numbers do you want to look through?");
+		int n = s.nextInt();
 		
-		for(int i = 0; i < 100; i++) {
-			if(i < 99)
-				bw.write(rand.nextInt(1000) + ",");
-			if(i == 99)
-				bw.write(rand.nextInt(1000));
+		System.out.println("Looking through " + n + " numbers");
+		
+		int[] arr = new int[n];
+		int[] lis = new int[n];
+		
+		for(int i = 0; i < n; i++) {
+			arr[i] = rand.nextInt(100);
+			lis[i] = 1;
 		}
 		
-		bw.close();
+		for(int i = 0; i < n - 1; i++) {
+			System.out.print(arr[i] + ",");
+		}
+		System.out.println(arr[n - 1]);
 		
+		for(int i = 1; i < arr.length; i++) {
+			for(int j = 0; j < i; j++) {
+				if(arr[j] < arr[i] && lis[i] < lis[j] + 1) {
+					lis[i] = lis[j] + 1;
+				}
+			}
+		}
 		
-		BufferedReader br = new BufferedReader(new FileReader("random.txt"));
-		
-		String line = br.readLine();
-		String[] arr = line.split(",");
-		
-		int greatestSequence = 0;
-		int tempSequence = 0;
-		int placeHolder = Integer.parseInt(arr[0]);
+		int seq = 0;
 		
 		for(int i = 0; i < arr.length; i++) {
-			if(i == 0) {
-				tempSequence = 1;
-			}
-			else {
-				int temp = Integer.parseInt(arr[i]);
-				if(temp > placeHolder) {
-					tempSequence++;
-					placeHolder = Integer.parseInt(arr[i]);
-				}
-				else {
-					placeHolder = Integer.parseInt(arr[i]);
-					if(tempSequence > greatestSequence) {
-						greatestSequence = tempSequence;
-						tempSequence = 0;
-					}
-				}
-			}
-		}
+			if(lis[i] > seq)
+				seq = lis[i];
+		}	
 		
-		if(tempSequence > greatestSequence)
-			greatestSequence = tempSequence;
+		System.out.println("The longest increasing subsequence is " + seq);
 		
-		System.out.println("The greatest Increasing subsequence is: " + greatestSequence);
-
 	}
-
+	
 }
