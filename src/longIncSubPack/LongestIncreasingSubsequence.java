@@ -29,9 +29,9 @@ public class LongestIncreasingSubsequence {
 		for(int i = 1; i < arr.length; i++) {
 			for(int j = 0; j < i; j++) {
 				if(arr[j] < arr[i] && lis[i] < lis[j] + 1) {
-					lis[i] = lis[j] + 1;
 				}
 			}
+			System.out.println();
 		}
 		
 		int seq = 0;
@@ -39,14 +39,11 @@ public class LongestIncreasingSubsequence {
 		for(int i = 0; i < arr.length; i++) {
 			if(lis[i] > seq)
 				seq = lis[i];
-		}
-		
-		
+		}	
 		
 		System.out.println("The longest increasing subsequence is " + seq);
 		
 	}
-
 	
 }
 
